@@ -68,12 +68,38 @@ def demonstracao_basica():
     print(f"Resultado: {chr((exemplo ^ chave_correta) ^ chave_correta)}")
 
 
+# Explica por que essa cifra não é segura.
+def analise_seguranca():
+    print("\n" + "=" * 60)
+    print("POR QUE ESSA CIFRA NÃO É SEGURA?")
+    print("=" * 60)
+    print("""
+1. CHAVE PEQUENA: Com apenas 255 valores possíveis (0-255),
+um atacante pode testar todas as chaves rapidamente (força bruta).\n
+2. CHAVE REUTILIZADA: A mesma chave é usada para cada caractere.
+Isso cria padrões detectáveis.\n
+3. ANÁLISE DE FREQUÊNCIA: Em textos longos, letras comuns (como 'e', 'a')
+criam padrões que podem revelar a chave.\n
+4. SEM AUTENTICAÇÃO: Não há forma de verificar se a mensagem
+foi alterada durante a transmissão.\n
+!!!    NUNCA USE ISSO EM PRODUÇÃO!    !!!\n
+Para segurança real, use bibliotecas como:
+- cryptography (Python)
+- AES, RSA, etc.        
+""")
+
+
 # Função principal.
 def main():
     print("\n CIFRA XOR - MINI-PROJETO EDUCACIONAL\n")
 
-    # Executa a demonstração básica
+    # Executa a demonstração básica.
     demonstracao_basica()
+
+    print("__" * 30)
+    
+    # Explica a segurança.
+    analise_seguranca()
 
 
 if __name__ == "__main__":
