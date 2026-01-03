@@ -21,3 +21,12 @@ Propriedades importantes:
 - A ⊕ A = 0
 - A ⊕ 0 = A
 - A ⊕ B ⊕ B = A
+
+## A cifra XOR
+
+A cifra XOR funciona aplicando o operador XOR byte a byte:
+
+C = P ⊕ K  
+P = C ⊕ K  
+
+Ou seja, cifrar e decifrar é a mesma operação.

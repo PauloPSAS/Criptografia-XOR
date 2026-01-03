@@ -9,6 +9,17 @@ def cript_XOR(texto, chave):
     return bytes(resultado)
 
 
+# Descriptografa um texto criptografado usando XOR.
+# Como A ⊕ B ⊕ B = A, usar a mesma função recupera o original.
+# Retorna o texto descriptografado.
+def descript_XOR(texto_criptografado, chave):
+    resultado = ""
+    for byte in texto_criptografado:
+        codigo_original = byte ^ chave
+        resultado += chr(codigo_original)
+    return resultado
+
+
 # Converte bytes para representação hexadecimal legível.
 def texto_para_hex(texto_bytes):
     return ' '.join(f'{b:02x}' for b in texto_bytes)
@@ -29,12 +40,32 @@ def demonstracao_basica():
     print(f"'{texto_original}'")
     print(f"Códigos ASCII: {[ord(c) for c in texto_original]}")
 
-    #Criptografar
+    #Criptografar.
     texto_criptografado = cript_XOR(texto_original, chave_correta)
     print(f"\n2. CRIPTOGRAFADO (com chave {chave_correta}): ")
     print(f"Bytes: {list(texto_criptografado)}")
     print(f"Hexadecimal: {texto_para_hex(texto_criptografado)}")
     print(f"Tentativa de exibir como texto: {texto_criptografado}")
+
+    # Descriptografar com chave correta.
+    texto_recuperado = descript_XOR(texto_criptografado, chave_correta)
+    print(f"\n3. DESCRIPTOGRAFADO COM CHAVE CORRETA ({chave_correta}): ", end="")
+    print(f"{texto_recuperado}")
+    print("✓    Sucesso! Texto original recuperado!")
+
+    # Descriptografar com chave errada.
+    texto_lixo = descript_XOR(texto_criptografado, chave_errada)
+    print(f"\n4. DESCRIPTOGRAFADO COM CHAVE ERRADA ({chave_errada}): ", end="")
+    print(f"{texto_lixo}")
+    print(f"✗    Resultado inelegivel sem a chave correta!   ")
+
+    # Demonstrando a propriedade A ⊕ B ⊕ B = A.
+    print(f"\n5. DEMONSTRANDO A PROPRIEDADE A ⊕ B ⊕ B = A: ")
+    exemplo = ord('H') # Equivalente ao primeiro caractere.
+    print(f"Caractere original: 'H' = {exemplo}")
+    print(f"'H' ⊕ {chave_correta} = {exemplo ^ chave_correta}")
+    print(f"{exemplo ^ chave_correta} ⊕ {chave_correta} = {(exemplo ^ chave_correta) ^ chave_correta}")
+    print(f"Resultado: {chr((exemplo ^ chave_correta) ^ chave_correta)}")
 
 
 # Função principal.
