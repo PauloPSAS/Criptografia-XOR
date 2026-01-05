@@ -68,6 +68,59 @@ def demonstracao_basica():
     print(f"Resultado: {chr((exemplo ^ chave_correta) ^ chave_correta)}")
 
 
+def modo_iterativo():
+    print("\n" + "=" * 60)
+    print("MODO INTERATIVO - EXPERIMENTE VOCÊ MESMO!")
+    print("=" * 60)
+
+    while True:
+        print("""\nOpções:\n1 - Criptografar um texto\n2 - Descriptografar um texto\n3 - Sair""")
+        opcao = input("\nEscolha uma opção: ").strip()
+
+        match opcao:
+            case '1':
+                texto = input("\nDigite um texto para criptografar: ")
+                try:
+                    chave = int(input("Digite a chave (número inteiro 1-255): "))
+                    if not 1 <= chave <= 255:
+                        print("Chave deve estar entre 1 e 255!")
+                        continue
+
+                    criptografado = cript_XOR(texto, chave)
+                    print(f"\n✓    Texto criptografado:")
+                    print(f"Hexadecimal: {texto_para_hex(criptografado)}")
+                    print(f"Bytes: {list(criptografado)}")
+                    print(f"\nGuarde esta chave para descriptografar: {chave}")
+                
+                except ValueError:
+                    print("Por favor digite um número válido!")
+            
+            case '2':
+                try:
+                    print("""\nDigite os bytes separados por espaço:\n(exemplo: 102 111 111)""")
+                    bytes_input = input("Bytes: ").strip()
+                    lista_bytes = [int(b) for b in bytes_input.split()]
+                    texto_criptografado = bytes(lista_bytes)
+
+                    chave = int(input("Digite a chave (número inteiro 1-255): "))
+                    if not 1 <= chave <= 255:
+                        print("Chave deve estar entre 1 e 255!")
+                        continue
+
+                    texto_recuperado = descript_XOR(texto_criptografado, chave)
+                    print(f"\n✓    Texto descriptografado: '{texto_recuperado}'")
+                
+                except ValueError:
+                    print("!!!    Formato inválido! Digite números separados por espaço.    !!!")
+            
+            case '3':
+                print("\nAté logo!")
+                return
+            
+            case _:
+                print("!!!    Opção inválida!    !!!")
+
+
 # Explica por que essa cifra não é segura.
 def analise_seguranca():
     print("\n" + "=" * 60)
@@ -100,6 +153,15 @@ def main():
     
     # Explica a segurança.
     analise_seguranca()
+
+    print("__" * 30)
+
+    # Pergunta se quer entrar no modo iterativo
+    resposta = input("\nDeseja experimentar o modo iterativo? (s/n): ").strip().lower()
+    if resposta == 's':
+        modo_iterativo()
+    else:
+        print("\n Até logo!")
 
 
 if __name__ == "__main__":
